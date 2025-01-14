@@ -164,6 +164,13 @@ const char* main_page = R"rawliteral(
             </select>
         </div>
         <button class="button-sync", onclick="setOffset()" >Зберегти пояс </button>
+<div class="divider"></div>
+        <div class="form-group">
+            <label for="custom-text">Відправити текст:</label>
+            <input type="text" id="custom-text" maxlength="40" placeholder="Введіть текст для відтворення">
+            </select>
+        </div>
+        <button class="button-sync", onclick="setCustomText()" >Відправити текст </button>
     </div>
 
 <script>
@@ -184,8 +191,7 @@ function syncTime() {
 function setOffset() {
     const timezone = document.getElementById("timezone");
     const value = timezone.value;
-    const text = timezone.options[e.selectedIndex].text;
-    const url = `/set_timezone?&offset=${value}&name=${text}`;
+    const url = `/set_timezone?&offset=${value}`;
     fetch(url);
     alert("Налаштування відправлені");
 
@@ -196,7 +202,7 @@ function temperatureOffset() {
 	const offset_value = offset.value;
 	const url = `/temperature_offset?&offset=${offset_value}`;
 	fetch(url);
-    alert("Налаштування відправлені");
+    alert("Налаштування корекції відправлені");
 }
 
 function ntpServer() {
@@ -204,7 +210,15 @@ function ntpServer() {
 	const ntp_url = e.value;
 	const url = `/ntp_server?&ntp_url=${ntp_url}&len=${ntp_url.length}`;
 	fetch(url);
-    alert("Налаштування відправлені");
+    alert("Налаштування NTP відправлені");
+}
+
+function setCustomText() {
+	const e = document.getElementById("custom-text");
+	const text = e.value;
+	const url = `/custom_text?&text=${text}&len=${text.length}`;
+	fetch(url);
+    alert("Текст відправлений");
 }
 
 function sendWiFi() {
@@ -214,7 +228,7 @@ function sendWiFi() {
     const password = e2.value;
     const url = `/set_wifi?&ssid=${ssid}&password=${password}`;
     fetch(url);
-    alert("Налаштування відправлені");
+    alert("Налаштування WiFi відправлені");
 }
 function getData() {
     fetch('/get_data')
